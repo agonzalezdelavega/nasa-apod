@@ -1,0 +1,43 @@
+<%- include('../include/head.ejs') %>
+    <script src="../scripts/div-size.js" defer></script>
+</head>
+    <body>
+        <main>
+            <div class="browse-div">
+            <a href="/images/<%= prev_date %>" class="browse-button">
+                <span class="material-symbols-sharp">
+                    arrow_back_ios_new
+                </span>
+            </a>
+            </div>
+            <div class="content">
+                <h1 class="image-title"><%= image_title %></h1>
+                <div class="image-container">
+                    <img src="<%= image %>" class="nasa-image">
+                </div>
+                <div class="image-text">
+                    <p class="image-description"><%= image_description %></p>
+                    <div class="content-bottom">
+                        <p class="copyright">Copyright: <%= image_copyright %></p>
+                        <p class="date"><%= date %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="browse-div">
+                <a href="/images/<%= next_date %>" class="browse-button" id="browse-button-next">
+                    <span class="material-symbols-sharp">
+                        arrow_forward_ios
+                    </span>
+                <% if (date === today) { %>
+                    <script>
+                        const link = document.getElementById("browse-button-next");
+                        link.style.color = "#7C7C7C";
+                        link.addEventListener('click', (event) => {
+                          event.preventDefault();
+                        });
+                    </script>
+                <% }; %>
+                </a>
+            </div>
+        </main>
+<%- include('../include/footer.ejs') %>
