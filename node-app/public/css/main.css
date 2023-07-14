@@ -11,7 +11,7 @@ body {
   height: 100vh;
   margin: 0;
   font-family: Roboto, sans-serif;
-  background-color: #1C0030;
+  background-color: #190033;
   color: #DCDCDC;
 }
 
@@ -20,7 +20,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 2;
+  flex-grow: 1;
 }
 
 .content-bottom {
@@ -35,8 +35,8 @@ body {
 }
  
 .nasa-image {
-  max-height: 400px;
-  max-width: 600px;
+  max-height: 500px;
+  max-width: 750px;
   width: auto;
 }
 
@@ -49,9 +49,9 @@ body {
 
 .browse-div {
   border-radius: 100%;
-  background-color: #5C0B8F;
-  margin: 100px;
-  padding: 1.5vw;
+  margin: 10vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .browse-button {
