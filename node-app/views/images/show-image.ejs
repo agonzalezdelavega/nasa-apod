@@ -1,8 +1,12 @@
 <%- include('../include/head.ejs') %>
-    <script src="../scripts/div-size.js" defer></script>
 </head>
     <body>
-        <main>
+    <%- include('../include/navbar.ejs') %>
+    <div class="fade-container" style="height: 0.5vh;">
+        <div class="fade" id="navbar-title-fade"></div>
+    </div>
+    <main>
+        <div class="title">
             <div class="browse-div">
                 <a href="/images/<%= prev_date %>" class="browse-button">
                     <span class="material-symbols-sharp">
@@ -10,34 +14,39 @@
                     </span>
                 </a>
             </div>
-            <div class="content">
-                <h1 class="image-title"><%= image_title %></h1>
-                <div class="image-container">
-                    <img src="<%= image %>" class="nasa-image">
-                </div>
-                <div class="image-text">
-                    <p class="image-description"><%= image_description %></p>
-                    <div class="content-bottom">
-                        <p class="copyright">Copyright: <%= image_copyright %></p>
-                        <p class="date"><%= date %></p>
-                    </div>
+        <h1 class="image-title"><%= image_title %></h1>
+        <div class="browse-div">
+            <a href="/images/<%= next_date %>" class="browse-button" id="browse-button-next">
+                <span class="material-symbols-sharp" id="next-arrow">
+                    arrow_forward_ios
+                </span>
+            <% if (date === today) { %>
+                <script>
+                    const link = document.getElementById("next-arrow");
+                    link.style.color = "#7C7C7C";
+                    link.style.height = "5px";
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                    });
+                </script>
+            <% }; %>
+            </a>
+        </div>
+        </div>
+        <div class="fade-container" style="height: 2vh;">
+            <div class="fade" id="title-content-fade"></div>
+        </div>
+        <div class="content">
+            <div class="image-container">
+                <img src="<%= image %>" class="nasa-image">
+            </div>
+            <div class="image-text">
+                <p class="image-description"><%= image_description %></p>
+                <div class="content-bottom">
+                    <p class="copyright">Copyright: <%= image_copyright %></p>
+                    <p class="date"><%= date %></p>
                 </div>
             </div>
-            <div class="browse-div">
-                <a href="/images/<%= next_date %>" class="browse-button" id="browse-button-next">
-                    <span class="material-symbols-sharp">
-                        arrow_forward_ios
-                    </span>
-                <% if (date === today) { %>
-                    <script>
-                        const link = document.getElementById("browse-button-next");
-                        link.style.color = "#7C7C7C";
-                        link.addEventListener('click', (event) => {
-                          event.preventDefault();
-                        });
-                    </script>
-                <% }; %>
-                </a>
-            </div>
-        </main>
+        </div>
+    </main>
 <%- include('../include/footer.ejs') %>
