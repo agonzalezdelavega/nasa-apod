@@ -13,7 +13,6 @@ body {
   font-family: Tahoma, sans-serif;
   background-color: var(--main-color);
   color: var(--font-color);
-  margin: 0px;
 }
 
 main {
