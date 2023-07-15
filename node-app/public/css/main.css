@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+body {
+  height: 100vh;
+  margin: 0px;
+  font-family: Roboto, sans-serif;
+  margin: 0px;
+}
+
 main {
   margin: auto;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-}
-
-body {
-  height: 100vh;
-  margin: 0;
-  font-family: Roboto, sans-serif;
   background-color: #190033;
   color: #DCDCDC;
 }
@@ -56,4 +57,15 @@ body {
 
 .browse-button {
   color: #DCDCDC;
+}
+
+.navbar {
+  background-color: #2E2E2E;
+  display: flex;
+  position: fixed;
+
+}
+
+.header-links {
+  display: flex;
 }
