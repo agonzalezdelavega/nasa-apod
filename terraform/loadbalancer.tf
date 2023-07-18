@@ -15,15 +15,26 @@ resource "aws_lb_target_group" "alb-target-group" {
   target_type = "ip"
   port        = 3000
   health_check {
-    path = "/"
+    path    = "/"
     matcher = "302"
   }
 }
 
-resource "aws_lb_listener" "app" {
+resource "aws_lb_listener" "app_http" {
   load_balancer_arn = aws_lb.apod_lb.arn
   port              = 80
   protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb-target-group.arn
+  }
+}
+
+resource "aws_lb_listener" "app_https" {
+  load_balancer_arn = aws_lb.apod_lb.arn
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate_validation.cert.certificate_arn
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb-target-group.arn

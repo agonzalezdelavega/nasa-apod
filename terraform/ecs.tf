@@ -19,7 +19,8 @@ data "template_file" "ecs_container_definition" {
     app_image        = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${data.aws_ecr_image.nasa-apod-image.repository_name}:latest",
     log_group_name   = data.aws_cloudwatch_log_group.ecs_task_logs.name,
     log_group_region = data.aws_region.current.name,
-    aws_region       = data.aws_region.current.name
+    aws_region       = data.aws_region.current.name,
+    cognito_url      = "https://${aws_cognito_user_pool_domain.main.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.app-client.id}&redirect_uri=https%3A%2F%2F${aws_route53_record.app.fqdn}"
   }
 }
 

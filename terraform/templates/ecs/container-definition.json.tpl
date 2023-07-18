@@ -5,7 +5,8 @@
         "essential": true,
         "memoryReservation": 256,
         "environment": [
-            {"name": "AWS_REGION", "value": "${aws_region}"}
+            {"name": "AWS_REGION", "value": "${aws_region}"},
+            {"name": "COGNITO_URL", "value": "${cognito_url}"}
         ],
         "logConfiguration" : {
             "logDriver": "awslogs",
