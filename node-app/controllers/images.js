@@ -1,4 +1,4 @@
-const Image = require("../models/image")
+const Image = require("../models/image");
 const moment = require("moment-timezone");
 
 exports.getTodaysImage = (req, res, next) => {

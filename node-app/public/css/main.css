@@ -71,17 +71,24 @@ main {
   background-color: #2E2E2E;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
   margin: 1vw;
 }
 
-.header-links {
+.navbar-link-list {
   display: flex;
   list-style: none;
   gap: 16px;
   align-items: center;
+}
+
+.navbar-link {
+  margin: 1vw;
+  text-decoration: none;
+  color: var(--font-color);
 }
 
 .image-description, .content-bottom {

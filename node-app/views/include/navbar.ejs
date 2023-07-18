@@ -1,12 +1,12 @@
 <div class="navbar">
-    <p class="logo" >Logo</p>
-    <ul class="header-links">
+    <ul class="navbar-link-list">
         <li>
             <form class="date-search-form" action="#" method="get">
                 <input type="date" class="date-search" name="imageDate" value="<%= date %>">
             </form>
         </li>
-        <li><a href="#"></a>View Favorites</li>
-        <li><a href="#"></a>Log In/Sign Up</li>
+        <li><a href="/images/<%= today %>" class="navbar-link">Today's Image</a></li>
+        <li><a href="#" class="navbar-link">View Favorites</a></li>
     </ul>
+    <a href="<%= process.env.COGNITO_URL %>" class="navbar-link">Sign In/Sign Up</a>
 </div>
