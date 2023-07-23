@@ -27,7 +27,6 @@ app.use(
       "table": {
         "name": process.env.DYNAMO_DB_TABLE_NAME,
         "hashKey": process.env.DYNAMO_DB_TABLE_PARTITION_KEY,
-        "hashPrefix": "sid-"
       },
       "dynamoConfig": {
         "endpoint": process.env.DYNAMO_DB_TABLE_ENDPOINT
