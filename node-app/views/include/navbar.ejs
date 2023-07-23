@@ -2,11 +2,15 @@
     <ul class="navbar-link-list">
         <li>
             <form class="date-search-form" action="#" method="get">
-                <input type="date" class="date-search" name="imageDate" value="<%= date %>">
+                <input type="date" class="date-search" name="imageDate" value="<%= today %>">
             </form>
         </li>
-        <li><a href="/images/<%= today %>" class="navbar-link">Today's Image</a></li>
+        <li><a href="/" class="navbar-link">Today's Image</a></li>
         <li><a href="#" class="navbar-link">View Favorites</a></li>
     </ul>
-    <a href="<%= process.env.COGNITO_URL %>" class="navbar-link">Sign In/Sign Up</a>
+    <% if (!isLoggedIn) { %>
+        <p><a href="/login" class="navbar-link">Sign In</a>/<a href="/signup" class="navbar-link">Sign Up</a></p>
+    <% } else { %>
+        <a href="/logout" class="navbar-link">Log Out</a>
+    <% } %>
 </div>

@@ -5,6 +5,8 @@
   --title-color: #190033;
   --font-color: #DCDCDC;
   --navbar-color: #2E2E2E;
+  --date-search-color: #0b0018;
+  --auth-button-color: #313131;
 }
 
 body {
@@ -68,7 +70,7 @@ main {
 }
 
 .navbar {
-  background-color: #2E2E2E;
+  background-color: var(--navbar-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,9 +126,16 @@ main {
 }
 
 .date-search {
-  background-color: #0b0018;
+  background-color: var(--date-search-color);
   color: var(--font-color);
-  border: 0.5em solid #0b0018;
+  border: 0.5em solid var(--date-search-color);
   border-radius: 0.6em;
   padding: 0.1em;
+}
+
+.body-link {
+  margin: 1vw;
+  text-decoration: none;
+  color: var(--font-color);
+  font-weight: bold;
 }
