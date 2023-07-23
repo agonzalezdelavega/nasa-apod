@@ -8,7 +8,7 @@
     <main>
         <div class="title">
             <div class="browse-div">
-                <a href="/images/<%= prev_date %>" class="browse-button">
+                <a href="/images/<%= prevDate %>" class="browse-button">
                     <span class="material-symbols-sharp">
                         arrow_back_ios_new
                     </span>
@@ -16,11 +16,11 @@
             </div>
         <h1 class="image-title"><%= image_title %></h1>
         <div class="browse-div">
-            <a href="/images/<%= next_date %>" class="browse-button" id="browse-button-next">
+            <a href="/images/<%= nextDate %>" class="browse-button" id="browse-button-next">
                 <span class="material-symbols-sharp" id="next-arrow">
                     arrow_forward_ios
                 </span>
-            <% if (date === today) { %>
+            <% if (imageDate === today) { %>
                 <script>
                     const link = document.getElementById("next-arrow");
                     link.style.color = "#7C7C7C";
@@ -44,7 +44,7 @@
                 <p class="image-description"><%= image_description %></p>
                 <div class="content-bottom">
                     <p class="copyright">Copyright: <%= image_copyright %></p>
-                    <p class="date"><%= date %></p>
+                    <p class="date"><%= imageDate %></p>
                 </div>
             </div>
         </div>

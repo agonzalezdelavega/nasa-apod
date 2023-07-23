@@ -8,13 +8,17 @@
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.347.0",
     "@aws-sdk/client-ssm": "^3.362.0",
-    "@fortawesome/fontawesome-free": "^6.4.0",
+    "aws-jwt-verify": "^4.0.0",
     "axios": "^1.4.0",
     "body-parser": "^1.18.3",
+    "dotenv": "^16.3.1",
+    "dynamodb-store": "^1.2.0",
     "ejs": "^3.1.9",
     "express": "^4.16.3",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
     "moment-timezone": "^0.5.43",
     "mysql2": "^3.4.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.0.1"
   }
 }

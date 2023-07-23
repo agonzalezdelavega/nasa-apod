@@ -1,41 +1,39 @@
 const Image = require("../models/image");
-const moment = require("moment-timezone");
 
 exports.getTodaysImage = (req, res, next) => {
-    const today = moment().tz("America/Chicago").format().slice(0,10);
-    res.redirect(`/images/${today}`);
+    res.redirect(`/images/${res.locals.today}`)
 };
 
 exports.getImage = (req, res, next) => {
-    const today = moment().tz("America/Chicago").format().slice(0,10);
     const image = new Image;
-    var date = req.params.imageDate;
+    var { imageDate } = req.params;
     if (!req.params.imageDate) {
-        date = today;
+        imageDate = res.locals.today;
     };
-    var prev_date = new Date(date), next_date = new Date(date);
-    prev_date.setDate(prev_date.getDate() - 1);
-    next_date.setDate(next_date.getDate() + 1);
+    var prevDate = new Date(imageDate), nextDate = new Date(imageDate);
+    prevDate.setDate(prevDate.getDate() - 1);
+    nextDate.setDate(nextDate.getDate() + 1);
+    req.session.imageDate = imageDate;
     (async () => {
         try {
-            await image.getImage(date)
+            await image.getImage(imageDate)
             .then((image) => {
                 var copyright = "N/A";
-                if (copyright in image) {
+                if (image.copyright) {
                     copyright = image.copyright;
                 };
                 res.render("images/show-image", {
-                    date: date,
+                    imageDate: imageDate,
                     media_type: image.media_type,
                     image: image.url,
                     image_title: image.title,
                     image_description: image.explanation,
                     image_copyright: copyright,
                     pageTitle: "Welcome to my image viewer!",
-                    today: today,
-                    prev_date: prev_date.toISOString().slice(0,10),
-                    next_date: next_date.toISOString().slice(0,10),
-                    path: "/"
+                    today: res.locals.today,
+                    prevDate: prevDate.toISOString().slice(0,10),
+                    nextDate: nextDate.toISOString().slice(0,10),
+                    isLoggedIn: req.session.isLoggedIn
                 });
             });
         } catch (error) {
