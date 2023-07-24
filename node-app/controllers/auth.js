@@ -95,7 +95,6 @@ exports.postUserSignUp = (req, res, next) => {
         try {
             const response = await client.send(command)
             .then((response) => {
-                req.session.isLoggedIn = true;
                 res.render("auth/signup-confirm", {
                     imageDate: imageDate,
                     pageTitle: "Sign Up Successful!",
