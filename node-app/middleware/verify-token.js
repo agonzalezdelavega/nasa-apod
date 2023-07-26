@@ -9,10 +9,11 @@ module.exports = (req, res, next) => {
                 clientId: process.env.COGNITO_CLIENT_ID,
             });
 
-            const payload = await verifier.verify(req.session.accessToken);
-            req.locals.userid = payload.username;
+            const payload = await verifier.verify(req.session.accessToken)
+            .then((response) => {
+                res.locals.userid = response.username;
+                next();
+            });
         })();
     };
-
-    next();
 };

@@ -12,6 +12,7 @@ global.moment = moment;
 
 const imageRoutes = require("./routes/images");
 const loginRoutes = require("./routes/auth");
+const favoritesRoute = require("./routes/favorites");
 
 const app = express();
 
@@ -25,8 +26,8 @@ app.use(
     saveUninitialized: true,
     store: new DynamoDBStore({
       "table": {
-        "name": process.env.DYNAMO_DB_TABLE_NAME,
-        "hashKey": process.env.DYNAMO_DB_TABLE_PARTITION_KEY,
+        "name": process.env.DYNAMO_DB_SESSIONS_TABLE_NAME,
+        "hashKey": process.env.DYNAMO_DB_SESSIONS_TABLE_PARTITION_KEY,
       },
       "dynamoConfig": {
         "endpoint": process.env.DYNAMO_DB_TABLE_ENDPOINT
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(imageRoutes);
 app.use(loginRoutes);
+app.use(favoritesRoute);
 
 app.use(errorController.get404);
 

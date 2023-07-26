@@ -1,0 +1,52 @@
+.navbar {
+    background-color: var(--navbar-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 8vh;
+}
+
+.navbar-link-list {
+    display: flex;
+    list-style: none;
+    gap: 1vw;
+    align-items: center;
+}
+  
+.navbar-link {
+    margin: 1vw;
+    text-decoration: none;
+    color: var(--font-color);
+    justify-content: center;
+}
+
+.date-search {
+    background-color: var(--date-search-color);
+    color: var(--font-color);
+    border: 0.5em solid var(--date-search-color);
+    border-radius: 0.6em;
+}
+
+.material-symbols-outlined {
+    color: var(--font-color);
+    cursor: default;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.material-symbols-outlined:hover, .favorite {
+    color: #ffd900;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+.btn-favorites {
+    background-color: var(--navbar-color);
+    border: none;
+}
