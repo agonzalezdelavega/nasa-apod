@@ -39,6 +39,7 @@ exports.postUserLogin = (req, res, next) => {
                 req.session.refreshToken = response.AuthenticationResult.RefreshToken;
             })
         } catch (error) {
+            console.log(error);
             res.render("auth/login", {
                 pageTitle: "Login",
                 errorMessage: "Incorrect username or password, please try again.",
@@ -57,6 +58,8 @@ exports.postUserLogin = (req, res, next) => {
         const payload = await verifier.verify(req.session.accessToken)
         .then((response) => {
             userId = response.username;
+            exp = new Date(response.exp*1000);
+            req.session.cookie.expires = exp;
         });
 
         try {
