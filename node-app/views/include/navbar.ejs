@@ -1,16 +1,27 @@
+<link rel="stylesheet" href="/css/navbar.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div class="navbar">
     <ul class="navbar-link-list">
         <li>
-            <form class="date-search-form" action="#" method="get">
-                <input type="date" class="date-search" name="imageDate" value="<%= today %>">
+            <form action="#" method="get">
+                <input type="date" class="date-search" name="imageDate" value="<%= imageDate %>">
             </form>
         </li>
-        <li><a href="/" class="navbar-link">Today's Image</a></li>
-        <li><a href="#" class="navbar-link">View Favorites</a></li>
+        <li>
+            <%- include('add-to-favorites.ejs') %>
+        </li>
     </ul>
-    <% if (!isLoggedIn) { %>
-        <p><a href="/login" class="navbar-link">Sign In</a>/<a href="/signup" class="navbar-link">Sign Up</a></p>
-    <% } else { %>
-        <a href="/logout" class="navbar-link">Log Out</a>
-    <% } %>
+    <ul class="navbar-link-list">
+        <li><a href="/images/<%= today %>" class="navbar-link">Today's Image</a></li>
+        <li><a href="/favorites" class="navbar-link">View Favorites</a></li>
+        <% if (!isLoggedIn) { %>
+            <li>
+                <p><a href="/login" class="navbar-link">Sign In</a>/<a href="/signup" class="navbar-link">Sign Up</a></p>
+            </li>
+        <% } else { %>
+            <li>
+                <a href="/logout" class="navbar-link">Log Out</a>
+            </li>
+        <% } %>
+    </ul>
 </div>

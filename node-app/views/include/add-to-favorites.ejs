@@ -1,0 +1,26 @@
+<% if (locals.image) { %>
+    <% if (!isLoggedIn) { %>
+        <span class="material-symbols-outlined" title="Sign in to add images to your favorites!">star</span>
+    <% } else { %>
+        <form action="/images/<%= imageDate %>" method="post">
+            <input type="hidden" name="imageDate" value="<%= imageDate %>">
+            <button class="btn-favorites" type="submit">
+                <span class="material-symbols-outlined" title="Add to favorites">star</span>
+                <script>
+                    var isFavorite = "<%= isFavorite %>";
+                    const star = document.querySelector(".material-symbols-outlined");
+                    if (isFavorite === "true") {
+                        star.classList.add("favorite")
+                    };
+
+                    function toggleFavorites(e) {
+                        isFavorite = !isFavorite;
+                        e.target.classList.toggle("favorite");
+                    };
+
+                    star.addEventListener("click", toggleFavorites);
+                </script>
+            </button>
+        </form>
+    <% } %>
+<% } %>
