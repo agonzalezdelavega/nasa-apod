@@ -72,7 +72,14 @@ exports.postUserLogin = (req, res, next) => {
             const command = new GetItemCommand(input);
             const response = await dynamoDBClient.send(command)
             .then((response) => {
-                req.session.favorites = response.Item.favorites.L.map(entry => {return entry["S"]});
+                req.session.favorites = [];
+                favorites = response.Item.favorites.L
+                for (let i=0; i < favorites.length; i++) {
+                    fav_date = response.Item.favorites.L[i].M.date["S"];
+                    fav_title = response.Item.favorites.L[i].M.title["S"];
+                    fav_url = response.Item.favorites.L[i].M.url["S"];
+                    req.session.favorites.push({"date": fav_date, "title": fav_title, "url": fav_url});
+                };
                 res.redirect(`/images/${imageDate}`);
             });
         } catch (error) {

@@ -4,6 +4,8 @@
     <% } else { %>
         <form action="/images/<%= imageDate %>" method="post">
             <input type="hidden" name="imageDate" value="<%= imageDate %>">
+            <input type="hidden" name="imageTitle" value="<%= imageTitle %>">
+            <input type="hidden" name="image" value="<%= image %>">
             <button class="btn-favorites" type="submit">
                 <span class="material-symbols-outlined" title="Add to favorites">star</span>
                 <script>
