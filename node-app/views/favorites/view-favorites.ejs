@@ -1,14 +1,34 @@
 <%- include('../include/head.ejs') %>
+<link rel="stylesheet" href="/css/favorites.css">
 </head>
 <%- include('../include/navbar.ejs') %>
-
 <body>
-    <div class="fade-container" style="height: 0.5vh;">
-        <div class="fade" id="navbar-title-fade"></div>
-    </div>
 <main>
     <div class="title" style="justify-content: center;">
         <h1>Favorites</h1>
+    </div>
+    <div class="fade-container">
+        <div class="fade title-content-fade"></div>
+    </div>
+    <div class="favorites-container">
+        <table class="favorites-table">
+            <tbody>
+            <tr>
+                <% for (let i = 0; i < favorites.length; i++) { %>
+                    <% if (i % 4 === 0 && i !== 0) { %>
+                        </tr><tr>
+                    <% } %>
+                    <td class="td-favorite">
+                        <a href="/images/<%= favorites[i].date %>" class="favorite-link">
+                            <h3 class="favorite-title"><%= favorites[i].title %></h3>
+                            <img src="<%= favorites[i].url %>" class="favorite-image">
+                            <p class="favorite-date"><%= favorites[i].date %></p>
+                        </a>
+                    </td>
+                <% } %>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 

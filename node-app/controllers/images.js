@@ -19,10 +19,6 @@ exports.getImage = (req, res, next) => {
     nextDate.setDate(nextDate.getDate() + 1);
     req.session.imageDate = imageDate;
 
-    if (req.session.favorites && req.session.favorites.includes(imageDate)) {
-        isFavorite = true;
-    };
-
     (async () => {
         try {
             await image.getImage(imageDate)
@@ -31,13 +27,22 @@ exports.getImage = (req, res, next) => {
                 if (image.copyright) {
                     copyright = image.copyright;
                 };
+
+                if (req.session.isLoggedIn) {
+                    const fav_check = req.session.favorites.some(entry => imageDate === entry.date);
+
+                    if (req.session.favorites && fav_check) {
+                        isFavorite = true;
+                    };  
+                };
+
                 res.render("images/show-image", {
                     imageDate: imageDate,
                     media_type: image.media_type,
                     image: image.url,
-                    image_title: image.title,
-                    image_description: image.explanation,
-                    image_copyright: copyright,
+                    imageTitle: image.title,
+                    imageDescription: image.explanation,
+                    imageCopyright: copyright,
                     pageTitle: "Welcome to my image viewer!",
                     today: res.locals.today,
                     prevDate: prevDate.toISOString().slice(0,10),
@@ -53,10 +58,12 @@ exports.getImage = (req, res, next) => {
 };
 
 exports.postFavorite = (req, res, next) => {
-    imageDate = req.params.imageDate;
-    userid = res.locals.userid;
-    if (req.session.favorites && req.session.favorites.includes(imageDate)) {
-        const index = req.session.favorites.indexOf(imageDate);
+    const { imageDate, imageTitle, image } = req.body;
+    const userid = res.locals.userid;
+    const imageData = {"date": imageDate, "title": imageTitle, "url": image};
+    const fav_check = req.session.favorites.some(entry => imageData.date === entry.date);
+    if (req.session.favorites && fav_check) {
+        const index = req.session.favorites.findIndex(entry => imageData.date === entry.date);
         req.session.favorites.splice(index, 1);
         const input = {
             TableName: process.env.DYNAMO_DB_FAVORITES_TABLE_NAME,
@@ -72,11 +79,12 @@ exports.postFavorite = (req, res, next) => {
                 .then((response) => {
                 });
             } catch (error) {
+                // console.log(error);
             };
         })();
         res.redirect(`/images/${imageDate}`);
     } else {
-        const index = req.session.favorites.push(imageDate) - 1;
+        const index = req.session.favorites.push(imageData) - 1;
         const input = {
             TableName: process.env.DYNAMO_DB_FAVORITES_TABLE_NAME,
             Key: {
@@ -84,7 +92,11 @@ exports.postFavorite = (req, res, next) => {
             },
             "ExpressionAttributeValues": {
                 ":i": {
-                    "S": imageDate
+                    "M": {
+                        "date": {"S": imageDate},
+                        "url": {"S": image},
+                        "title": {"S": imageTitle},
+                    },
                 }
             },
             UpdateExpression:`SET favorites[${index}] = :i`
@@ -96,6 +108,7 @@ exports.postFavorite = (req, res, next) => {
                 .then((response) => {
                 });
             } catch (error) {
+                console.log(error);
             };
         })();
         res.redirect(`/images/${imageDate}`);

@@ -89,21 +89,22 @@ main {
 
 .fade-container {
   width: 100%;
+  height: 2vh;
   position: relative;
 }
 
 .fade {
   width: 100%;
-  height: 100%;
+  height: 2vh;
   position: absolute;
   bottom: 0;
 }
 
-#title-content-fade {
+.title-content-fade {
   background: linear-gradient(to top, var(--main-color), var(--title-color));
 }
 
-#navbar-title-fade {
+.navbar-title-fade {
   background: linear-gradient(to top, var(--title-color), var(--navbar-color));
 }
 

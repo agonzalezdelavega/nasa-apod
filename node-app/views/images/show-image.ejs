@@ -1,20 +1,17 @@
 <%- include('../include/head.ejs') %>
 </head>
 <%- include('../include/navbar.ejs') %>
-    <body>
-    <div class="fade-container" style="height: 0.5vh;">
-        <div class="fade" id="navbar-title-fade"></div>
-    </div>
-    <main>
-        <div class="title">
-            <div class="browse-div">
-                <a href="/images/<%= prevDate %>" class="browse-button">
-                    <span class="material-symbols-sharp">
-                        arrow_back_ios_new
-                    </span>
-                </a>
-            </div>
-        <h1><%= image_title %></h1>
+<body>
+<main>
+    <div class="title">
+        <div class="browse-div">
+            <a href="/images/<%= prevDate %>" class="browse-button">
+                <span class="material-symbols-sharp">
+                    arrow_back_ios_new
+                </span>
+            </a>
+        </div>
+        <h1><%= imageTitle %></h1>
         <div class="browse-div">
             <a href="/images/<%= nextDate %>" class="browse-button" id="browse-button-next">
                 <span class="material-symbols-sharp" id="next-arrow">
@@ -32,21 +29,21 @@
             <% }; %>
             </a>
         </div>
+    </div>
+    <div class="fade-container">
+        <div class="fade title-content-fade"></div>
+    </div>
+    <div class="content">
+        <div class="image-container">
+            <img src="<%= image %>" class="nasa-image">
         </div>
-        <div class="fade-container" style="height: 2vh;">
-            <div class="fade" id="title-content-fade"></div>
-        </div>
-        <div class="content">
-            <div class="image-container">
-                <img src="<%= image %>" class="nasa-image">
+        <div class="image-text">
+            <p class="image-description"><%= imageDescription %></p>
+            <div class="content-bottom">
+                <p class="copyright">Copyright: <%= imageCopyright %></p>
+                <p class="date"><%= imageDate %></p>
             </div>
-            <div class="image-text">
-                <p class="image-description"><%= image_description %></p>
-                <div class="content-bottom">
-                    <p class="copyright">Copyright: <%= image_copyright %></p>
-                    <p class="date"><%= imageDate %></p>
-                </div>
-            </div>
         </div>
-    </main>
+    </div>
+</main>
 <%- include('../include/footer.ejs') %>
