@@ -4,14 +4,14 @@ const Image = require("../models/image");
 const client = new DynamoDBClient();
 
 exports.getTodaysImage = (req, res, next) => {
-    res.redirect(`/images/${res.locals.today}`)
+    res.redirect(`/images?imageDate=${res.locals.today}`)
 };
 
 exports.getImage = (req, res, next) => {
     const image = new Image;
     var isFavorite = false;
-    var { imageDate } = req.params;
-    if (!req.params.imageDate) {
+    var { imageDate } = req.query;
+    if (!req.query.imageDate) {
         imageDate = res.locals.today;
     };
     var prevDate = new Date(imageDate), nextDate = new Date(imageDate);
@@ -33,12 +33,11 @@ exports.getImage = (req, res, next) => {
 
                     if (req.session.favorites && fav_check) {
                         isFavorite = true;
-                    };  
+                    };
                 };
-
                 res.render("images/show-image", {
                     imageDate: imageDate,
-                    media_type: image.media_type,
+                    mediaType: image.media_type,
                     image: image.url,
                     imageTitle: image.title,
                     imageDescription: image.explanation,
@@ -82,7 +81,7 @@ exports.postFavorite = (req, res, next) => {
                 // console.log(error);
             };
         })();
-        res.redirect(`/images/${imageDate}`);
+        res.redirect(`/images?imageDate=${imageDate}`);
     } else {
         const index = req.session.favorites.push(imageData) - 1;
         const input = {
@@ -111,6 +110,6 @@ exports.postFavorite = (req, res, next) => {
                 console.log(error);
             };
         })();
-        res.redirect(`/images/${imageDate}`);
+        res.redirect(`/images?imageDate=${imageDate}`);
     };
 };

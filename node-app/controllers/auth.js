@@ -80,7 +80,7 @@ exports.postUserLogin = (req, res, next) => {
                     fav_url = response.Item.favorites.L[i].M.url["S"];
                     req.session.favorites.push({"date": fav_date, "title": fav_title, "url": fav_url});
                 };
-                res.redirect(`/images/${imageDate}`);
+                res.redirect(`/images?imageDate=${imageDate}`);
             });
         } catch (error) {
             console.log(error);
@@ -104,7 +104,7 @@ exports.postUserLogout = (req, res, next) => {
         const response = await cognitoClient.send(command)
         .then(() => {
             req.session.destroy(() => {
-                res.redirect(`/images/${imageDate}`)
+                res.redirect(`/images?imageDate=${imageDate}`)
             });
         });
     })();

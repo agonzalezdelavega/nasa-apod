@@ -19,7 +19,7 @@
                         </tr><tr>
                     <% } %>
                     <td class="td-favorite">
-                        <a href="/images/<%= favorites[i].date %>" class="favorite-link">
+                        <a href="/images?imageDate=<%= favorites[i].date %>" class="favorite-link">
                             <h3 class="favorite-title"><%= favorites[i].title %></h3>
                             <img src="<%= favorites[i].url %>" class="favorite-image">
                             <p class="favorite-date"><%= favorites[i].date %></p>

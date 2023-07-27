@@ -6,7 +6,6 @@ const client = new CognitoIdentityProviderClient();
 module.exports = (req, res, next) => {
     if (req.session.accessToken) {
         const currentTime = new Date();
-        req.session.cookie._expires = new Date(1658865607000);
         if (currentTime > req.session.cookie._expires) {
             (async() => {
                 const input = {

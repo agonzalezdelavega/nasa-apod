@@ -8,7 +8,7 @@ const isAuth = require("../middleware/is-auth");
 const router = express.Router();
 
 router.get("/", getTodaysDate, imagesController.getTodaysImage);
-router.get("/images/:imageDate", getTodaysDate, verifyToken, imagesController.getImage);
-router.post("/images/:imageDate", isAuth, getTodaysDate, verifyToken, imagesController.postFavorite);
+router.get("/images", getTodaysDate, verifyToken, imagesController.getImage);
+router.post("/images", isAuth, getTodaysDate, verifyToken, imagesController.postFavorite);
 
 module.exports = router;
