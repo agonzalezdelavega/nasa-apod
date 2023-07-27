@@ -5,7 +5,7 @@
 <main>
     <div class="title">
         <div class="browse-div">
-            <a href="/images/<%= prevDate %>" class="browse-button">
+            <a href="/images?imageDate=<%= prevDate %>" class="browse-button">
                 <span class="material-symbols-sharp">
                     arrow_back_ios_new
                 </span>
@@ -13,7 +13,7 @@
         </div>
         <h1><%= imageTitle %></h1>
         <div class="browse-div">
-            <a href="/images/<%= nextDate %>" class="browse-button" id="browse-button-next">
+            <a href="/images?imageDate=<%= nextDate %>" class="browse-button" id="browse-button-next">
                 <span class="material-symbols-sharp" id="next-arrow">
                     arrow_forward_ios
                 </span>
@@ -35,7 +35,11 @@
     </div>
     <div class="content">
         <div class="image-container">
-            <img src="<%= image %>" class="nasa-image">
+            <% if (mediaType === 'image') { %>
+                <img src="<%= image %>" class="nasa-image">
+            <% } else { %>
+                <iframe width="600" height="450" src="<%= image %>"></iframe> 
+            <% } %>
         </div>
         <div class="image-text">
             <p class="image-description"><%= imageDescription %></p>

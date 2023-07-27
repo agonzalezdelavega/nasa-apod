@@ -9,7 +9,6 @@
 .navbar-link-list {
     display: flex;
     list-style: none;
-    gap: 1vw;
     align-items: center;
 }
   
@@ -18,13 +17,6 @@
     text-decoration: none;
     color: var(--font-color);
     justify-content: center;
-}
-
-.date-search {
-    background-color: var(--date-search-color);
-    color: var(--font-color);
-    border: 0.5em solid var(--date-search-color);
-    border-radius: 0.6em;
 }
 
 .material-symbols-outlined {
@@ -37,7 +29,7 @@
     'opsz' 48
 }
 
-.material-symbols-outlined:hover, .favorite {
+.star:hover, .favorite {
     color: #ffd900;
     font-variation-settings:
     'FILL' 1,
@@ -49,4 +41,30 @@
 .btn-favorites {
     background-color: var(--navbar-color);
     border: none;
+}
+
+.form-search {
+    display: flex;
+    align-items: center;
+    width: 12vw;
+}
+
+.date-search {
+    background-color: var(--date-search-color);
+    color: var(--font-color);
+    border: 0.5em solid var(--date-search-color);
+    border-radius: 0.6em;
+    margin-right: 5%;
+}
+
+.btn-search {
+    background-color: var(--navbar-color);
+    color: var(--font-color);   
+    border: 0;
+    display: flex;
+    align-items: center;
+}
+
+.magnifying-glass:hover {
+    color: #00a2ff;
 }

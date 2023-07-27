@@ -3,16 +3,17 @@
 <div class="navbar">
     <ul class="navbar-link-list">
         <li>
-            <form action="/images/imageDate" method="get">
-                <input type="date" class="date-search" name="imageDate" value="<%= imageDate %>">
+            <form action="/images?imageDate=imageDate" method="get" class="form-search">
+                <input type="date" class="date-search" name="imageDate" value="<%= imageDate %>" min="1995-06-17">
+                <button type="submit" class="btn-search"><span class="material-symbols-outlined magnifying-glass">search</span></button>
             </form>
         </li>
         <li>
             <%- include('add-to-favorites.ejs') %>
         </li>
     </ul>
-    <ul class="navbar-link-list">
-        <li><a href="/images/<%= today %>" class="navbar-link">Today's Image</a></li>
+    <ul class="navbar-link-list" style="gap: 1vw;">
+        <li><a href="/images?imageDate=<%= today %>" class="navbar-link">Today's Image</a></li>
         <li><a href="/favorites" class="navbar-link">View Favorites</a></li>
         <% if (!isLoggedIn) { %>
             <li>
