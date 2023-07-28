@@ -1,4 +1,4 @@
-const { DynamoDBClient, TransactWriteItemsCommand, UpdateItemCommand, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, UpdateItemCommand } = require("@aws-sdk/client-dynamodb");
 const Image = require("../models/image");
 
 const client = new DynamoDBClient();
@@ -11,6 +11,8 @@ exports.getImage = (req, res, next) => {
     const image = new Image;
     var isFavorite = false;
     var { imageDate } = req.query;
+    var copyright = "N/A";
+
     if (!req.query.imageDate) {
         imageDate = res.locals.today;
     };
@@ -23,8 +25,7 @@ exports.getImage = (req, res, next) => {
         try {
             await image.getImage(imageDate)
             .then((image) => {
-                var copyright = "N/A";
-                if (image.copyright) {
+                if ("copyright" in image) {
                     copyright = image.copyright;
                 };
 
@@ -35,7 +36,7 @@ exports.getImage = (req, res, next) => {
                         isFavorite = true;
                     };
                 };
-                res.render("images/show-image", {
+                res.render("images/show-image", {   
                     imageDate: imageDate,
                     mediaType: image.media_type,
                     image: image.url,
@@ -57,9 +58,9 @@ exports.getImage = (req, res, next) => {
 };
 
 exports.postFavorite = (req, res, next) => {
-    const { imageDate, imageTitle, image } = req.body;
+    const { imageDate, imageTitle, image, mediaType } = req.body;
     const userid = res.locals.userid;
-    const imageData = {"date": imageDate, "title": imageTitle, "url": image};
+    const imageData = {"date": imageDate, "title": imageTitle, "url": image, "mediaType": mediaType};
     const fav_check = req.session.favorites.some(entry => imageData.date === entry.date);
     if (req.session.favorites && fav_check) {
         const index = req.session.favorites.findIndex(entry => imageData.date === entry.date);
@@ -74,11 +75,9 @@ exports.postFavorite = (req, res, next) => {
         const command = new UpdateItemCommand(input);
         (async () => {
             try {
-                await client.send(command)
-                .then((response) => {
-                });
+                response = await client.send(command);
             } catch (error) {
-                // console.log(error);
+                console.log(error);
             };
         })();
         res.redirect(`/images?imageDate=${imageDate}`);
@@ -95,6 +94,7 @@ exports.postFavorite = (req, res, next) => {
                         "date": {"S": imageDate},
                         "url": {"S": image},
                         "title": {"S": imageTitle},
+                        "mediaType": {"S": mediaType}
                     },
                 }
             },

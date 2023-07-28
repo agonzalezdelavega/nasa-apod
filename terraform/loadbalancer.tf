@@ -18,6 +18,11 @@ resource "aws_lb_target_group" "alb-target-group" {
     path    = "/"
     matcher = "302"
   }
+  stickiness {
+    type        = "app_cookie"
+    cookie_name = "nasa-apod"
+    enabled     = true
+  }
 }
 
 resource "aws_lb_listener" "app_http" {

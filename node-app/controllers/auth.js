@@ -40,7 +40,7 @@ exports.postUserLogin = (req, res, next) => {
             })
         } catch (error) {
             console.log(error);
-            res.render("auth/login", {
+            return res.status(401).render("auth/login", {
                 pageTitle: "Login",
                 errorMessage: "Incorrect username or password, please try again.",
                 today: res.locals.today,
@@ -49,18 +49,18 @@ exports.postUserLogin = (req, res, next) => {
             });
         };
 
-        const verifier = CognitoJwtVerifier.create({
-            userPoolId: process.env.USER_POOL_ID,
-            tokenUse: "access",
-            clientId: process.env.COGNITO_CLIENT_ID,
-        });
-
-        const payload = await verifier.verify(req.session.accessToken)
-        .then((response) => {
-            userId = response.username;
-            exp = new Date(response.exp*1000);
-            req.session.cookie.expires = exp;
-        });
+        // if (req.session.accessToken && req.session.isLoggedIn) {
+            const verifier = CognitoJwtVerifier.create({
+                userPoolId: process.env.USER_POOL_ID,
+                tokenUse: "access",
+                clientId: process.env.COGNITO_CLIENT_ID,
+            });
+            const payload = await verifier.verify(req.session.accessToken)
+            .then((response) => {
+                userId = response.username;
+                exp = new Date(response.exp*1000);
+                req.session.cookie.expires = exp;
+            });
 
         try {
             const input = {
@@ -92,7 +92,7 @@ exports.postUserLogin = (req, res, next) => {
                 imageDate: req.session.imageDate,
             });
         };
-
+        // };
     })();
 };
 

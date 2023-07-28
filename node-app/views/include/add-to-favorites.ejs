@@ -1,11 +1,12 @@
 <% if (locals.image) { %>
     <% if (!isLoggedIn) { %>
-        <span class="material-symbols-outlined" title="Sign in to add images to your favorites!">star</span>
+        <span class="material-symbols-outlined star" title="Sign in to add images to your favorites!">star</span>
     <% } else { %>
         <form action="/images?imageDate=<%= imageDate %>" method="post">
             <input type="hidden" name="imageDate" value="<%= imageDate %>">
             <input type="hidden" name="imageTitle" value="<%= imageTitle %>">
             <input type="hidden" name="image" value="<%= image %>">
+            <input type="hidden" name="mediaType" value="<%= mediaType %>">
             <button class="btn-favorites" type="submit">
                 <span class="material-symbols-outlined star" title="Add to favorites">star</span>
                 <script>

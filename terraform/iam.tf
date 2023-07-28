@@ -46,9 +46,19 @@ resource "aws_iam_role" "nasa-apod-task-role" {
   })
 }
 
+data "template_file" "task_role_policy" {
+  template = file("./templates/iam/ecs-task-role-policy.json.tpl")
+  vars = {
+    aws_region                     = data.aws_region.current.name,
+    account                        = data.aws_caller_identity.current.account_id,
+    dynamo_db_sessions_table_name  = "nasa-apod-dynamo-db-sessions",
+    dynamo_db_favorites_table_name = aws_dynamodb_table.nasa-apod-favorites.name
+  }
+}
+
 resource "aws_iam_policy" "apod-lambda-allow-ssm" {
   name   = "${aws_iam_role.nasa-apod-task-role.name}-allow-ssm"
-  policy = file("./templates/iam/ecs-task-role-policy.json")
+  policy = data.template_file.task_role_policy.rendered
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-task-role-attachment" {

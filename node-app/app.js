@@ -1,9 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const session = require('express-session');
-const dotenv = require('dotenv');
-const DynamoDBStore = require('dynamodb-store');
+const session = require("express-session");
+const dotenv = require("dotenv");
+const DynamoDBStore = require("connect-dynamodb")(session);
 
 dotenv.config();
 
@@ -22,22 +22,18 @@ app.set("views", "views");
 app.use(
   session({
     secret: process.env.EXPRESS_SECRET,
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
     store: new DynamoDBStore({
-      "table": {
-        "name": process.env.DYNAMO_DB_SESSIONS_TABLE_NAME,
-        "hashKey": process.env.DYNAMO_DB_SESSIONS_TABLE_PARTITION_KEY,
-      },
-      "dynamoConfig": {
-        "endpoint": process.env.DYNAMO_DB_TABLE_ENDPOINT
-      }
+      table: process.env.DYNAMO_DB_SESSIONS_TABLE_NAME,
+      hashKey: process.env.DYNAMO_DB_SESSIONS_TABLE_PARTITION_KEY,
+      readCapacityUnits: 5,
+      writeCapacityUnits: 5,
     }),
     cookie: {
-      httpOnly: true,
-      secure: false,
+      httpOnly: false,
       maxAge: 3600000
-    }
+    },
   })
 );
 
