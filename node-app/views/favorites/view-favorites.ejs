@@ -21,7 +21,11 @@
                     <td class="td-favorite">
                         <a href="/images?imageDate=<%= favorites[i].date %>" class="favorite-link">
                             <h3 class="favorite-title"><%= favorites[i].title %></h3>
-                            <img src="<%= favorites[i].url %>" class="favorite-image">
+                            <% if (favorites[i].mediaType === 'image') { %>
+                                <img src="<%= favorites[i].url %>" class="favorite-image">
+                            <% } else { %>
+                                <iframe width="300" height="225" src="<%= favorites[i].url %>"></iframe> 
+                            <% } %>
                             <p class="favorite-date"><%= favorites[i].date %></p>
                         </a>
                     </td>

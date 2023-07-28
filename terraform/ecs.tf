@@ -4,8 +4,8 @@ resource "aws_ecs_cluster" "nasa-apod" {
   name = "${var.prefix}-cluster"
 }
 
-data "aws_cloudwatch_log_group" "ecs_task_logs" {
-  name = "nasa-apod-logs"
+resource "aws_cloudwatch_log_group" "ecs_task_logs" {
+  name = "${var.prefix}-logs"
 }
 
 data "aws_ecr_image" "nasa-apod-image" {
@@ -13,14 +13,30 @@ data "aws_ecr_image" "nasa-apod-image" {
   image_tag       = "latest"
 }
 
+resource "random_string" "express_secret" {
+  length = 16
+}
+
+data "aws_ssm_parameter" "api-key" {
+  name = "nasa-api-key"
+}
+
 data "template_file" "ecs_container_definition" {
   template = file("./templates/ecs/container-definition.json.tpl")
   vars = {
-    app_image        = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${data.aws_ecr_image.nasa-apod-image.repository_name}:latest",
-    log_group_name   = data.aws_cloudwatch_log_group.ecs_task_logs.name,
-    log_group_region = data.aws_region.current.name,
-    aws_region       = data.aws_region.current.name,
-    cognito_url      = "https://${aws_cognito_user_pool_domain.main.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.app-client.id}&redirect_uri=https%3A%2F%2F${aws_route53_record.app.fqdn}"
+    app_image                         = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/${data.aws_ecr_image.nasa-apod-image.repository_name}:latest",
+    log_group_name                    = aws_cloudwatch_log_group.ecs_task_logs.name,
+    aws_region                        = data.aws_region.current.name,
+    cognito_url                       = "https://${aws_cognito_user_pool_domain.main.domain}.auth.${data.aws_region.current.name}.amazoncognito.com/login?response_type=code&client_id=${aws_cognito_user_pool_client.app-client.id}&redirect_uri=https%3A%2F%2F${aws_route53_record.app.fqdn}",
+    cognito_client_id                 = aws_cognito_user_pool_client.app-client.id,
+    user_pool_id                      = aws_cognito_user_pool.user_pool.id,
+    dynamo_db_sessions_table_name     = "nasa-apod-dynamo-db-sessions",
+    dynamo_db_sessions_partition_key  = "sessionID",
+    dynamo_db_favorites_table_name    = aws_dynamodb_table.nasa-apod-favorites.name,
+    dynamo_db_favorites_partition_key = aws_dynamodb_table.nasa-apod-favorites.hash_key,
+    dynamo_db_endpoint                = "dynamodb.${data.aws_region.current.name}.amazonaws.com",
+    express_session_secret            = random_string.express_secret.result,
+    api_key                           = data.aws_ssm_parameter.api-key.value
   }
 }
 

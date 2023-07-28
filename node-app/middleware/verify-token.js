@@ -4,7 +4,7 @@ const { CognitoJwtVerifier } = require("aws-jwt-verify");
 const client = new CognitoIdentityProviderClient();
     
 module.exports = (req, res, next) => {
-    if (req.session.accessToken) {
+    if (req.session.accessToken && req.session.isLoggedIn) {
         const currentTime = new Date();
         if (currentTime > req.session.cookie._expires) {
             (async() => {

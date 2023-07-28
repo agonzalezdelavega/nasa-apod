@@ -6,14 +6,15 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.378.0",
     "@aws-sdk/client-dynamodb": "^3.370.0",
     "@aws-sdk/client-lambda": "^3.347.0",
     "@aws-sdk/client-ssm": "^3.362.0",
     "aws-jwt-verify": "^4.0.0",
     "axios": "^1.4.0",
     "body-parser": "^1.18.3",
+    "connect-dynamodb": "^3.0.0",
     "dotenv": "^16.3.1",
-    "dynamodb-store": "^1.2.0",
     "ejs": "^3.1.9",
     "express": "^4.16.3",
     "express-session": "^1.17.3",

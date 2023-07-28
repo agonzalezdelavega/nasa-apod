@@ -4,7 +4,7 @@
     <ul class="navbar-link-list">
         <li>
             <form action="/images?imageDate=imageDate" method="get" class="form-search">
-                <input type="date" class="date-search" name="imageDate" value="<%= imageDate %>" min="1995-06-17">
+                <input type="date" class="date-search" name="imageDate" value="<%= imageDate %>" min="1995-06-17" max="<%= today %>">
                 <button type="submit" class="btn-search"><span class="material-symbols-outlined magnifying-glass">search</span></button>
             </form>
         </li>

@@ -1,9 +1,13 @@
 resource "aws_cognito_user_pool" "user_pool" {
-  name = "nasa-apod-user-pool"
+  name = "${var.prefix}-user-pool"
 
   auto_verified_attributes = ["email"]
 
-  alias_attributes = ["email"]
+  username_attributes = ["email"]
+
+  verification_message_template {
+    default_email_option = "CONFIRM_WITH_LINK"
+  }
 
   email_configuration {
     email_sending_account = "COGNITO_DEFAULT"
@@ -15,7 +19,7 @@ resource "aws_cognito_user_pool" "user_pool" {
       priority = 1
     }
   }
-  
+
   schema {
     attribute_data_type      = "String"
     developer_only_attribute = false
@@ -24,9 +28,14 @@ resource "aws_cognito_user_pool" "user_pool" {
     required                 = true
   }
 
-  verification_message_template {
-    default_email_option = "CONFIRM_WITH_CODE"
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = false
+    require_numbers   = false
+    require_symbols   = false
+    require_uppercase = false
   }
+
   lifecycle {
     ignore_changes = [
       schema
@@ -35,7 +44,7 @@ resource "aws_cognito_user_pool" "user_pool" {
 }
 
 resource "random_id" "user_pool_domain_id" {
-  byte_length = 2
+  byte_length = 8
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
@@ -51,4 +60,5 @@ resource "aws_cognito_user_pool_client" "app-client" {
   allowed_oauth_flows                  = ["code", "implicit"]
   allowed_oauth_scopes                 = ["email", "openid"]
   supported_identity_providers         = ["COGNITO"]
+  explicit_auth_flows                  = ["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 }
