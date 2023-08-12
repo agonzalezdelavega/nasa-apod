@@ -17,7 +17,9 @@
         </form>
         <a href="/signup" class="signup-button">or <strong>Create new account</strong></a>
     </div>
-    <p><%= errorMessage %></p>
+    <% if (errorMessage === "") { %>
+        <p><%= errorMessage %></p>
+    <% }; %>
 </main>
 
 

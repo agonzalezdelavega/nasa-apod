@@ -6,7 +6,7 @@ resource "aws_vpc" "main" {
   enable_dns_support   = true
   instance_tenancy     = "default"
   tags = {
-    Name = "${var.prefix}-main"
+    Name = "${local.prefix}-main"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_subnet" "public-2a" {
   map_public_ip_on_launch = true
   availability_zone       = "${data.aws_region.current.name}a"
   tags = {
-    Name = "${var.prefix}-public-2a"
+    Name = "${local.prefix}-public-2a"
   }
   depends_on = [
     aws_vpc.main
@@ -29,7 +29,7 @@ resource "aws_subnet" "public-2b" {
   map_public_ip_on_launch = true
   availability_zone       = "${data.aws_region.current.name}b"
   tags = {
-    Name = "${var.prefix}-public-2b"
+    Name = "${local.prefix}-public-2b"
   }
   depends_on = [
     aws_vpc.main
@@ -42,7 +42,7 @@ resource "aws_subnet" "private-2a" {
   map_public_ip_on_launch = false
   availability_zone       = "${data.aws_region.current.name}a"
   tags = {
-    Name = "${var.prefix}-private-2a"
+    Name = "${local.prefix}-private-2a"
   }
   depends_on = [
     aws_vpc.main
@@ -55,7 +55,7 @@ resource "aws_subnet" "private-2b" {
   map_public_ip_on_launch = false
   availability_zone       = "${data.aws_region.current.name}b"
   tags = {
-    Name = "${var.prefix}-private-2b"
+    Name = "${local.prefix}-private-2b"
   }
   depends_on = [
     aws_vpc.main
@@ -67,7 +67,7 @@ resource "aws_subnet" "private-2b" {
 resource "aws_internet_gateway" "igw-main" {
   vpc_id = aws_vpc.main.id
   tags = {
-    "Name" = "${var.prefix}-igw"
+    "Name" = "${local.prefix}-igw"
   }
   depends_on = [
     aws_vpc.main

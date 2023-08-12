@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool" "user_pool" {
-  name = "${var.prefix}-user-pool"
+  name = "${local.prefix}-user-pool"
 
   auto_verified_attributes = ["email"]
 
@@ -48,12 +48,12 @@ resource "random_id" "user_pool_domain_id" {
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = "${var.prefix}-${random_id.user_pool_domain_id.hex}"
+  domain       = "${local.prefix}-${random_id.user_pool_domain_id.hex}"
   user_pool_id = aws_cognito_user_pool.user_pool.id
 }
 
 resource "aws_cognito_user_pool_client" "app-client" {
-  name                                 = "${var.prefix}-app-client"
+  name                                 = "${local.prefix}-app-client"
   user_pool_id                         = aws_cognito_user_pool.user_pool.id
   callback_urls                        = ["https://${aws_route53_record.app.fqdn}"]
   allowed_oauth_flows_user_pool_client = true

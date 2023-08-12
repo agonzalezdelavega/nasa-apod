@@ -1,7 +1,7 @@
 # Load Balancer
 
 resource "aws_security_group" "elb" {
-  name   = "${var.prefix}-elb"
+  name   = "${local.prefix}-elb"
   vpc_id = aws_vpc.main.id
   ingress {
     from_port   = 80
@@ -26,7 +26,7 @@ resource "aws_security_group" "elb" {
 # ECS
 
 resource "aws_security_group" "ecs_service" {
-  name   = "${var.prefix}-ecs"
+  name   = "${local.prefix}-ecs"
   vpc_id = aws_vpc.main.id
   ingress {
     from_port       = 3000

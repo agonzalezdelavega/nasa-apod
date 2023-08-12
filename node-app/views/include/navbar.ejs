@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="/css/navbar.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<div class="navbar">
+<nav>
     <ul class="navbar-link-list">
         <li>
             <form action="/images?imageDate=imageDate" method="get" class="form-search">
@@ -12,12 +10,12 @@
             <%- include('add-to-favorites.ejs') %>
         </li>
     </ul>
-    <ul class="navbar-link-list" style="gap: 1vw;">
+    <ul class="navbar-link-list">
         <li><a href="/images?imageDate=<%= today %>" class="navbar-link">Today's Image</a></li>
         <li><a href="/favorites" class="navbar-link">View Favorites</a></li>
         <% if (!isLoggedIn) { %>
             <li>
-                <p><a href="/login" class="navbar-link">Sign In</a>/<a href="/signup" class="navbar-link">Sign Up</a></p>
+                <p><a href="/login" class="navbar-link">Sign In</a> / <a href="/signup" class="navbar-link">Sign Up</a></p>
             </li>
         <% } else { %>
             <li>
@@ -25,7 +23,4 @@
             </li>
         <% } %>
     </ul>
-</div>
-<div class="fade-container">
-    <div class="fade navbar-title-fade"></div>
-</div>
+</nav>

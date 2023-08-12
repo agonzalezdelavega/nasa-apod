@@ -1,5 +1,5 @@
 resource "aws_lb" "apod_lb" {
-  name               = "${var.prefix}-load-balancer"
+  name               = "${local.prefix}-load-balancer"
   load_balancer_type = "application"
   subnets = [
     aws_subnet.public-2a.id,
@@ -9,7 +9,7 @@ resource "aws_lb" "apod_lb" {
 }
 
 resource "aws_lb_target_group" "alb-target-group" {
-  name        = "${var.prefix}-alb-target-group"
+  name        = "${local.prefix}-alb-target-group"
   protocol    = "HTTP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"

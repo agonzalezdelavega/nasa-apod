@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "nasa-apod-sessions" {
-  name           = "${var.prefix}-dynamo-db-sessions"
+  name           = "${local.prefix}-dynamo-db-sessions"
   hash_key       = "sessionID"
   billing_mode   = "PROVISIONED"
   read_capacity  = 5

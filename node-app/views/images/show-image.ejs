@@ -1,7 +1,6 @@
 <%- include('../include/head.ejs') %>
-</head>
-<%- include('../include/navbar.ejs') %>
 <body>
+<%- include('../include/navbar.ejs') %>
 <main>
     <div class="title">
         <div class="browse-div">
@@ -11,7 +10,7 @@
                 </span>
             </a>
         </div>
-        <h1><%= imageTitle %></h1>
+        <h1 class="image-title"><%= imageTitle %></h1>
         <div class="browse-div">
             <a href="/images?imageDate=<%= nextDate %>" class="browse-button" id="browse-button-next">
                 <span class="material-symbols-sharp" id="next-arrow">
@@ -30,9 +29,6 @@
             </a>
         </div>
     </div>
-    <div class="fade-container">
-        <div class="fade title-content-fade"></div>
-    </div>
     <div class="content">
         <div class="image-container">
             <% if (mediaType === 'image') { %>
@@ -43,7 +39,7 @@
         </div>
         <div class="image-text">
             <p class="image-description"><%= imageDescription %></p>
-            <div class="content-bottom">
+            <div class="description-footer">
                 <p class="copyright">Copyright: <%= imageCopyright %></p>
                 <p class="date"><%= imageDate %></p>
             </div>
