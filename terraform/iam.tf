@@ -1,7 +1,7 @@
 # ECS Task Execution Role
 
 resource "aws_iam_role" "nasa-apod-task-execution-role" {
-  name = "${var.prefix}-task-execution-role"
+  name = "${local.prefix}-task-execution-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-attachment" {
 # ECS Task Role
 
 resource "aws_iam_role" "nasa-apod-task-role" {
-  name = "${var.prefix}-task-role"
+  name = "${local.prefix}-task-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

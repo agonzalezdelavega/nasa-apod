@@ -1,5 +1,12 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+}
+
 .auth {
-    margin-top: 4vh;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,24 +33,25 @@
 .auth-button {
     color: var(--font-color);
     background-color: var(--auth-button-color);
-    border: 0.5em solid var(--auth-button-color);
+    border: 5px solid var(--auth-button-color);
+    border-radius: 10px;
     width: 33%;
     font-weight: bold;
-    margin-top: 2vh;
+    margin-top: 10px;
 }
   
 .signup-button, .login-button {
     color: #6883fd;
-    margin-top: 2vh;
+    margin-top: 10px;
     font-size: 12px;
     text-decoration: none;
 }
   
 .signup-error {
-    margin-top: 3vh;
+    margin-top: 20px;
     background-color: #d187a0;
     border: 2px solid #b10000;
     color: #a00000;
-    padding: 1vh 1vw 1vh 1vw;
-    border-radius: 0.8em;
+    padding: 5px;
+    border-radius: 10px;
 }

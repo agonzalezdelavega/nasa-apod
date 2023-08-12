@@ -1,11 +1,11 @@
 # ECS Cluster
 
 resource "aws_ecs_cluster" "nasa-apod" {
-  name = "${var.prefix}-cluster"
+  name = "${local.prefix}-cluster"
 }
 
 resource "aws_cloudwatch_log_group" "ecs_task_logs" {
-  name = "${var.prefix}-logs"
+  name = "${local.prefix}-logs"
 }
 
 data "aws_ecr_image" "nasa-apod-image" {
@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "apod_app" {
 # ECS Service
 
 resource "aws_ecs_service" "apod" {
-  name                   = "${var.prefix}-service"
+  name                   = "${local.prefix}-service"
   cluster                = aws_ecs_cluster.nasa-apod.name
   task_definition        = aws_ecs_task_definition.apod_app.family
   desired_count          = 2

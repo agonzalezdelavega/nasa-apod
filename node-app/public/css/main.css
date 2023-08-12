@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 :root {
   --main-color: #1f013f;
   --title-color: #190033;
@@ -7,62 +5,36 @@
   --navbar-color: #2E2E2E;
   --date-search-color: #0b0018;
   --auth-button-color: #313131;
+  color: var(--font-color);
+  background-color: var(--main-color);
+  font-family: sans-serif;
+  height: 100%;
 }
 
 body {
-  height: 83vh;
-  margin: 0px;
-  font-family: Tahoma, sans-serif;
-  background-color: var(--main-color);
-  color: var(--font-color);
-  position: relative;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 
 main {
   width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.content {
-  display: flex;
-  justify-content: center;
-  align-items:flex-start;
-  background-color: var(--main-color);
-  width: 100%;
   height: 100%;
-  padding-top: 4vh;
 }
 
-.content-bottom {
-  display: flex;
-  justify-content: space-between;
-}
+/* Title area */
 
-.image-container {
+.title {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
   align-items: center;
-  flex: 4;
-}
- 
-.nasa-image {
-  max-height: 37vw;
-  max-width: 55vw;
-  width: auto;
-  border: 2px solid #535353;
-}
-
-.image-text {
-  max-width: 600px;
-  height: 90%;
-  flex: 3;
-  margin-right: 2vw;
-  padding: 2vh 0 2vh 0;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, var(--title-color) 80%, var(--main-color));
+  padding: 2vh 0;
 }
 
 .browse-div {
@@ -79,43 +51,67 @@ main {
   margin: 1vh 1vw 0vh 1vw;
 }
 
-.title {
-  height: 9vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--title-color);
-}
-
 .title > * {
-  margin: 0 1.5vw 0 1.5vw;
+  margin: 0 30px 15px 30px;
 }
 
-.fade-container {
-  width: 100%;
-  height: 2vh;
-  position: relative;
-}
-
-.fade {
-  width: 100%;
-  height: 2vh;
-  position: absolute;
-  bottom: 0;
-}
-
-.title-content-fade {
-  background: linear-gradient(to top, var(--main-color), var(--title-color));
-}
-
-.navbar-title-fade {
-  background: linear-gradient(to top, var(--title-color), var(--navbar-color));
-}
-
-.body-link {
-  margin: 1vw;
-  text-decoration: none;
+.image-title {
   color: var(--font-color);
-  font-weight: bold;
+  font-size: 1.5em;
+}
+
+/* Image and description */
+
+.content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: top;
+  background-color: var(--main-color);
+  width: 100%;
+  margin: 2vh 0 0 0;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+ 
+.nasa-image {
+  max-height: 37vw;
+  max-width: 55vw;
+  width: auto;
+  border: 2px solid #535353;
+  margin: 0 40px;
+}
+
+.image-text {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 10px 40px;
+}
+
+.description-footer {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+/* Footer */
+
+footer {
+  width: 100%;
+  justify-content: left;
+  font-size: 0.8rem;
+  background: linear-gradient(to top, var(--title-color) 20%, var(--main-color));
+}
+
+footer p {
+  color: #9b9b9b;
+  margin-left: 2%;
+}
+
+.footer-link {
+  text-decoration: none;
 }

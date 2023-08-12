@@ -1,22 +1,30 @@
-.navbar {
-    background-color: var(--navbar-color);
+nav {
+    background: linear-gradient(to bottom, var(--navbar-color) 80%, var(--title-color));
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 8vh;
+    padding: 9px 0;
+    width: 100%;
 }
 
 .navbar-link-list {
     display: flex;
     list-style: none;
     align-items: center;
+    justify-content: space-evenly;
+    margin: 0 0 15px 30px;
+    padding: 0;
 }
-  
+
+.navbar-link-list:nth-child(2) {
+    width: 450px;
+}
+
 .navbar-link {
-    margin: 1vw;
     text-decoration: none;
     color: var(--font-color);
     justify-content: center;
+    padding: 0;
 }
 
 .material-symbols-outlined {
@@ -46,15 +54,19 @@
 .form-search {
     display: flex;
     align-items: center;
-    width: 12vw;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .date-search {
     background-color: var(--date-search-color);
     color: var(--font-color);
-    border: 0.5em solid var(--date-search-color);
+    border: 3px solid var(--date-search-color);
+    padding: 5px;
+    width: 120px;
     border-radius: 0.6em;
-    margin-right: 5%;
+    margin-right: 10px;
+    color-scheme: dark;
 }
 
 .btn-search {
