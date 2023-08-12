@@ -1,3 +1,13 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 50px;
+}
+
 .favorites-container {
     display: flex;
     align-items: top;

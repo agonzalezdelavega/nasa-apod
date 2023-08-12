@@ -7,9 +7,9 @@
     <div class="title" style="justify-content: center;">
         <h1>Favorites</h1>
     </div>
-    <div class="fade-container">
-        <div class="fade title-content-fade"></div>
-    </div>
+    <% if (favorites.length === 0) { %>
+        <h2>You currently have no saved favorites.</h2>
+    <% }; %>
     <div class="favorites-container">
         <table class="favorites-table">
             <tbody>
@@ -35,5 +35,3 @@
         </table>
     </div>
 </main>
-
-<%- include('../include/footer.ejs') %>
