@@ -40,7 +40,7 @@ main {
     margin-top: 10px;
 }
   
-.signup-button, .login-button {
+.auth-form-link {
     color: #6883fd;
     margin-top: 10px;
     font-size: 12px;

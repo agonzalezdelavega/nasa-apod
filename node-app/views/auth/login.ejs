@@ -15,12 +15,10 @@
                 <button type="submit" class="auth-button">Log In</button>
             </div>
         </form>
-        <a href="/signup" class="signup-button">or <strong>Create new account</strong></a>
+        <a href="/signup" class="auth-form-link">or <strong>Create new account</strong></a>
     </div>
     <% if (errorMessage === "") { %>
         <p><%= errorMessage %></p>
     <% }; %>
 </main>
 
-
-<%- include('../include/footer.ejs') %>
