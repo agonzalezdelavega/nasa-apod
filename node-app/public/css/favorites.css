@@ -31,12 +31,12 @@ h2 {
 
 .td-favorite {
     min-width: 20%;
-    height: 50vh;
+    height: 300px;
 }
 
 .favorite-image {
     max-width: 100%;
-    max-height: 30vh;
+    max-height: 200px;
 }
 
 .favorite-title {
