@@ -46,6 +46,7 @@ app.use(imageRoutes);
 app.use(loginRoutes);
 app.use(favoritesRoute);
 
+app.use("/health", (req, res) => res.send("OK"))
 app.use(errorController.get404);
 
 app.listen(3000);

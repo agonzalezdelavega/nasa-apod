@@ -15,8 +15,9 @@ resource "aws_lb_target_group" "alb-target-group" {
   target_type = "ip"
   port        = 3000
   health_check {
-    path    = "/"
-    matcher = "302"
+    path     = "/health"
+    matcher  = "200"
+    port     = 3000
   }
   stickiness {
     type        = "app_cookie"

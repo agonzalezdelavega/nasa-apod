@@ -62,7 +62,7 @@ resource "aws_subnet" "private-2b" {
   ]
 }
 
-# IGW + NATs
+# IGW
 
 resource "aws_internet_gateway" "igw-main" {
   vpc_id = aws_vpc.main.id
@@ -74,26 +74,88 @@ resource "aws_internet_gateway" "igw-main" {
   ]
 }
 
-resource "aws_eip" "eip-2a" {}
+# NAT Instance
 
-resource "aws_eip" "eip-2b" {}
-
-resource "aws_nat_gateway" "nat-2a" {
-  subnet_id     = aws_subnet.public-2a.id
-  allocation_id = aws_eip.eip-2a.id
-  depends_on = [
-    aws_subnet.public-2a,
-    aws_eip.eip-2a
-  ]
+data "aws_ami" "nat-instance-ami" {
+  owners      = ["amazon"]
+  most_recent = true
+  filter {
+    name   = "name"
+    values = [var.nat_ami_name] # Must be an Amazon Linux 2023 AMI
+  }
 }
 
-resource "aws_nat_gateway" "nat-2b" {
-  subnet_id     = aws_subnet.public-2b.id
-  allocation_id = aws_eip.eip-2b.id
-  depends_on = [
-    aws_subnet.public-2b,
-    aws_eip.eip-2b
-  ]
+resource "aws_iam_instance_profile" "nat_instance_profile" {
+  name = "nat-instances"
+  role = aws_iam_role.nat.name
+}
+
+resource "aws_network_interface" "nat-2a" {
+  subnet_id         = aws_subnet.public-2a.id
+  source_dest_check = false
+  security_groups   = [aws_security_group.nat.id]
+}
+
+resource "aws_eip" "eip-2a" {
+  network_interface = aws_network_interface.nat-2a.id
+}
+
+resource "aws_launch_template" "nat-2a" {
+  name          = "${local.prefix}-nat-2a"
+  image_id      = data.aws_ami.nat-instance-ami.id
+  instance_type = "t3.nano"
+  network_interfaces {
+    network_interface_id = aws_network_interface.nat-2a.id
+  }
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.nat_instance_profile.arn
+  }
+  user_data = filebase64("./templates/scripts/user-data.sh")
+}
+
+resource "aws_autoscaling_group" "nat-2a" {
+  availability_zones = [aws_subnet.public-2a.availability_zone]
+  desired_capacity   = 1
+  min_size           = 1
+  max_size           = 1
+  launch_template {
+    id      = aws_launch_template.nat-2a.id
+    version = "$Latest"
+  }
+}
+
+resource "aws_network_interface" "nat-2b" {
+  subnet_id         = aws_subnet.public-2b.id
+  source_dest_check = false
+  security_groups   = [aws_security_group.nat.id]
+}
+
+resource "aws_eip" "eip-2b" {
+  network_interface = aws_network_interface.nat-2b.id
+}
+
+resource "aws_launch_template" "nat-2b" {
+  name          = "${local.prefix}-nat-2b"
+  image_id      = data.aws_ami.nat-instance-ami.id
+  instance_type = "t3.nano"
+  network_interfaces {
+    network_interface_id = aws_network_interface.nat-2b.id
+  }
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.nat_instance_profile.arn
+  }
+  user_data = filebase64("./templates/scripts/user-data.sh")
+}
+
+resource "aws_autoscaling_group" "nat-2b" {
+  availability_zones = [aws_subnet.public-2b.availability_zone]
+  desired_capacity   = 1
+  min_size           = 1
+  max_size           = 1
+  launch_template {
+    id      = aws_launch_template.nat-2b.id
+    version = "$Latest"
+  }
 }
 
 # Route Tables
@@ -109,16 +171,16 @@ resource "aws_route_table" "route-table-public" {
 resource "aws_route_table" "route-table-private-2a" {
   vpc_id = aws_vpc.main.id
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-2a.id
+    cidr_block           = "0.0.0.0/0"
+    network_interface_id = aws_network_interface.nat-2a.id
   }
 }
 
 resource "aws_route_table" "route-table-private-2b" {
   vpc_id = aws_vpc.main.id
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-2b.id
+    cidr_block           = "0.0.0.0/0"
+    network_interface_id = aws_network_interface.nat-2b.id
   }
 }
 
