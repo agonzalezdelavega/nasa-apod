@@ -15,7 +15,7 @@
             {"name": "DYNAMO_DB_FAVORITES_TABLE_PARTITION_KEY", "value": "${dynamo_db_favorites_partition_key}"},
             {"name": "DYNAMO_DB_TABLE_ENDPOINT", "value": "${dynamo_db_endpoint}"},
             {"name": "EXPRESS_SECRET", "value": "${express_session_secret}"},
-            {"name": "API_KEY", "value": "${api_key}"}
+            {"name": "API_KEY_SECRET", "value": "${api_key_secret}"}
         ],
         "logConfiguration" : {
             "logDriver": "awslogs",

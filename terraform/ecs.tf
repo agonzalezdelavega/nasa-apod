@@ -17,10 +17,6 @@ resource "random_string" "express_secret" {
   length = 16
 }
 
-data "aws_ssm_parameter" "api-key" {
-  name = "nasa-api-key"
-}
-
 data "template_file" "ecs_container_definition" {
   template = file("./templates/ecs/container-definition.json.tpl")
   vars = {
@@ -36,7 +32,7 @@ data "template_file" "ecs_container_definition" {
     dynamo_db_favorites_partition_key = aws_dynamodb_table.nasa-apod-favorites.hash_key,
     dynamo_db_endpoint                = "dynamodb.${data.aws_region.current.name}.amazonaws.com",
     express_session_secret            = random_string.express_secret.result,
-    api_key                           = data.aws_ssm_parameter.api-key.value
+    api_key_secret                    = var.api_key_secretsmanager_name
   }
 }
 

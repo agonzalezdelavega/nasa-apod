@@ -4,7 +4,7 @@ data "aws_route53_zone" "zone" {
 
 resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "www.${data.aws_route53_zone.zone.name}"
+  name    = "apod.${data.aws_route53_zone.zone.name}"
   type    = "CNAME"
   ttl     = "300"
   records = [aws_lb.apod_lb.dns_name]

@@ -1,11 +1,17 @@
 {
 	"Version": "2012-10-17",
 	"Statement": [
-		{
-			"Sid": "getParameterAPIKey",
+        {
+			"Sid": "getKMSKey",
 			"Effect": "Allow",
-			"Action": "ssm:GetParameter",
-			"Resource": "arn:aws:ssm:*:*:parameter/nasa-api-key"
+			"Action": "kms:Decrypt",
+			"Resource": "${kms_key_arn}"          
+        },
+        {
+			"Sid": "getAPIKey",
+			"Effect": "Allow",
+			"Action": "secretsmanager:GetSecretValue",
+			"Resource": "${api_key_arn}"
 		},
 		{
 			"Sid": "dynamoDBFavorites",
