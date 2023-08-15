@@ -49,7 +49,6 @@ exports.postUserLogin = (req, res, next) => {
             });
         };
 
-        // if (req.session.accessToken && req.session.isLoggedIn) {
             const verifier = CognitoJwtVerifier.create({
                 userPoolId: process.env.USER_POOL_ID,
                 tokenUse: "access",
@@ -78,9 +77,16 @@ exports.postUserLogin = (req, res, next) => {
                     fav_date = response.Item.favorites.L[i].M.date["S"];
                     fav_title = response.Item.favorites.L[i].M.title["S"];
                     fav_url = response.Item.favorites.L[i].M.url["S"];
-                    req.session.favorites.push({"date": fav_date, "title": fav_title, "url": fav_url});
+                    fav_mediaType = response.Item.favorites.L[i].M.mediaType["S"];
+                    req.session.favorites.push({
+                        "date": fav_date,
+                        "title": fav_title,
+                        "url": fav_url,
+                        "mediaType": fav_mediaType
+                    });
                 };
                 res.redirect(`/images?imageDate=${imageDate}`);
+
             });
         } catch (error) {
             console.log(error);
