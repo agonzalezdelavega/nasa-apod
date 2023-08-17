@@ -86,8 +86,15 @@ main {
   margin: 0 40px;
 }
 
+.nasa-video {
+  height: 400px;
+  width: 600px;
+  border: 2px solid #535353;
+  margin: 0 40px;
+}
+
 .image-text {
-  font-size: 1.2rem;
+  font-size: max(14px, 1.2rem);
   max-width: 600px;
   margin: 10px 40px;
 }
@@ -96,6 +103,10 @@ main {
   display: flex;
   justify-content: space-between;
   margin: 10px;
+}
+
+.date {
+  width: 170px;
 }
 
 /* Footer */

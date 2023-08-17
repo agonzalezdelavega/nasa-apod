@@ -86,7 +86,7 @@ data "aws_ami" "nat-instance-ami" {
 }
 
 resource "aws_iam_instance_profile" "nat_instance_profile" {
-  name = "nat-instances"
+  name = "${local.prefix}-nat-instances"
   role = aws_iam_role.nat.name
 }
 

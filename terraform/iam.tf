@@ -106,7 +106,7 @@ data "template_file" "nat_task_role_policy" {
 }
 
 resource "aws_iam_policy" "nat-iam-policy" {
-  name   = "${aws_iam_role.nasa-apod-task-role.name}-nat"
+  name   = "${local.prefix}-nat-policy"
   policy = data.template_file.nat_task_role_policy.rendered
 }
 
