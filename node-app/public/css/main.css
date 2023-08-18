@@ -7,7 +7,7 @@
   --auth-button-color: #313131;
   color: var(--font-color);
   background-color: var(--main-color);
-  font-family: sans-serif;
+  font-family: Trebuchet MS, sans-serif;
   height: 100%;
 }
 
@@ -65,22 +65,14 @@ main {
 .content {
   display: flex;
   justify-content: space-evenly;
-  align-items: top;
   background-color: var(--main-color);
   width: 100%;
-  margin: 2vh 0 0 0;
+  margin: 10px 0 0 0;
 }
 
-.image-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
- 
 .nasa-image {
-  max-height: 37vw;
-  max-width: 55vw;
+  max-height: 33vw;
+  max-width: 48vw;
   width: auto;
   border: 2px solid #535353;
   margin: 0 40px;
@@ -94,9 +86,11 @@ main {
 }
 
 .image-text {
-  font-size: max(14px, 1.2rem);
+  font-size: clamp(0.5rem, 3vw, 1rem);
+  margin: 0 40px;
   max-width: 600px;
-  margin: 10px 40px;
+  max-height: 70vh;
+  overflow: auto;
 }
 
 .description-footer {
@@ -107,6 +101,15 @@ main {
 
 .date {
   width: 170px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6e607e;
+  border-radius: 6px;
 }
 
 /* Footer */

@@ -3,7 +3,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0 9px 0;
+    padding: 7px 0 3px 0;
     width: 100%;
 }
 
@@ -63,7 +63,7 @@ nav {
     color: var(--font-color);
     border: 3px solid var(--date-search-color);
     padding: 5px;
-    width: 120px;
+    width: 125px;
     border-radius: 0.6em;
     margin-right: 10px;
     color-scheme: dark;

@@ -18,6 +18,7 @@ resource "aws_lb_target_group" "alb-target-group" {
     path     = "/health"
     matcher  = "200"
     port     = 3000
+    interval = 90
   }
   stickiness {
     type        = "app_cookie"
