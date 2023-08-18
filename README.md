@@ -3,6 +3,12 @@
 ## Website link
 https://apod.agonzalezdelavega.com
 
+Feel free to use the credentials below to get a better view of the user experience:
+
+**Username**: apodtestag@gmail.com
+
+**Password**: apodtestag
+
 ## Description
 Every day, NASA publishes high-quality pictures in their [astronomy picture of the day website](https://apod.nasa.gov/apod/) for everyone to enjoy the wonderful sights above our skies. Using the [NASA APIs](https://api.nasa.gov/), we can build a highly available, cost effective image viewer on AWS that users can visit anytime to enjoy the beauty of our universe.
 
