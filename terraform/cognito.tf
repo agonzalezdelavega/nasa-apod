@@ -20,20 +20,20 @@ resource "aws_cognito_user_pool" "user_pool" {
     }
   }
 
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = true
+    require_uppercase = true
+    require_symbols   = true
+    require_numbers   = true
+  }
+
   schema {
     attribute_data_type      = "String"
     developer_only_attribute = false
     mutable                  = true
     name                     = "email"
     required                 = true
-  }
-
-  password_policy {
-    minimum_length    = 8
-    require_lowercase = false
-    require_numbers   = false
-    require_symbols   = false
-    require_uppercase = false
   }
 
   lambda_config {
