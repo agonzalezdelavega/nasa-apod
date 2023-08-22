@@ -100,7 +100,7 @@ data "template_file" "nat_task_role_policy" {
   vars = {
     aws_region       = data.aws_region.current.name,
     account          = data.aws_caller_identity.current.account_id,
-    eip-allocation-a = aws_eip.eip-2a.allocation_id
+    eip-allocation-a = aws_eip.eip-2a.allocation_id,
     eip-allocation-b = aws_eip.eip-2b.allocation_id
   }
 }
@@ -113,4 +113,57 @@ resource "aws_iam_policy" "nat-iam-policy" {
 resource "aws_iam_role_policy_attachment" "nat-iam-policy-attachment" {
   role       = aws_iam_role.nat.name
   policy_arn = aws_iam_policy.nat-iam-policy.arn
+}
+
+# Lambda
+
+
+resource "aws_iam_role" "lambda-post-user-signup" {
+  name = "${local.prefix}-lambda-post-user-signup"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = "AssumeLambdaRole"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+data "aws_kms_alias" "lambda" {
+  name = "alias/aws/lambda"
+}
+
+data "template_file" "lambda-post-user-signup" {
+  template = file("./templates/iam/lambda-post-user-signup.json.tpl")
+  vars = {
+    aws_region                     = data.aws_region.current.name,
+    account                        = data.aws_caller_identity.current.account_id,
+    dynamo_db_favorites_table_name = aws_dynamodb_table.nasa-apod-favorites.name,
+    key_id                         = data.aws_kms_alias.lambda.target_key_id
+  }
+}
+
+resource "aws_iam_policy" "lambda-post-user-signup-policy" {
+  name   = "${local.prefix}-lambda-post-user-signup-policy"
+  policy = data.template_file.lambda-post-user-signup.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-post-user-signup-iam-policy-attachment" {
+  role       = aws_iam_role.lambda-post-user-signup.name
+  policy_arn = aws_iam_policy.lambda-post-user-signup-policy.arn
+}
+
+data "aws_iam_policy" "lambda-basic-execution" {
+  name = "AWSLambdaBasicExecutionRole"
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-post-user-signup-logs" {
+  role       = aws_iam_role.lambda-post-user-signup.name
+  policy_arn = data.aws_iam_policy.lambda-basic-execution.arn
 }

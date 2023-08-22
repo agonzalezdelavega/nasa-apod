@@ -162,33 +162,6 @@ exports.postUserSignUp = (req, res, next) => {
                 isLoggedIn: req.session.isLoggedIn
             });
         };
-
-        try {
-            const input = {
-                TableName: process.env.DYNAMO_DB_FAVORITES_TABLE_NAME,
-                Item: {
-                    "userID": {
-                        "S": userId
-                    },
-                    "favorites": {
-                        "L": []
-                    }
-                }
-            };
-            const command = new PutItemCommand(input);
-            const response = await dynamoDBClient.send(command)
-            .then(() => {
-                res.render("auth/signup-confirm", {
-                    imageDate: imageDate,
-                    pageTitle: "Sign Up Successful!",
-                    today: res.locals.today,
-                    isLoggedIn: req.session.isLoggedIn
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        };
-        
     })();
 };
 
