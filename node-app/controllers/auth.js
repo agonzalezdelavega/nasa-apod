@@ -1,5 +1,5 @@
 const { CognitoIdentityProviderClient, InitiateAuthCommand, GlobalSignOutCommand, SignUpCommand } = require("@aws-sdk/client-cognito-identity-provider");
-const { DynamoDBClient, PutItemCommand, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
 const { validationResult } = require("express-validator");
 const { CognitoJwtVerifier } = require("aws-jwt-verify");
 
@@ -98,7 +98,6 @@ exports.postUserLogin = (req, res, next) => {
                 imageDate: req.session.imageDate,
             });
         };
-        // };
     })();
 };
 
