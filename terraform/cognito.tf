@@ -36,6 +36,10 @@ resource "aws_cognito_user_pool" "user_pool" {
     require_uppercase = false
   }
 
+  lambda_config {
+    post_confirmation = aws_lambda_function.user_post_signup.arn
+  }
+
   lifecycle {
     ignore_changes = [
       schema
@@ -61,4 +65,13 @@ resource "aws_cognito_user_pool_client" "app-client" {
   allowed_oauth_scopes                 = ["email", "openid"]
   supported_identity_providers         = ["COGNITO"]
   explicit_auth_flows                  = ["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
+}
+
+# Lambda trigger permissions
+
+resource "aws_lambda_permission" "post-confirmation-trigger" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.user_post_signup.function_name
+  principal     = "cognito-idp.amazonaws.com"
+  source_arn    = aws_cognito_user_pool.user_pool.arn
 }

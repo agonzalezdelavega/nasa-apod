@@ -16,9 +16,9 @@ resource "aws_security_group" "elb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
+    from_port = 3000
+    to_port   = 3000
+    protocol  = "tcp"
     security_groups = [
       aws_security_group.nat.id,
       aws_security_group.ecs_service.id
@@ -46,19 +46,19 @@ resource "aws_security_group" "nat" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "nat_ingress_elb" {
-  security_group_id = aws_security_group.nat.id
+  security_group_id            = aws_security_group.nat.id
   referenced_security_group_id = aws_security_group.elb.id
-  from_port   = 3000
-  to_port     = 3000
-  ip_protocol = "tcp"
+  from_port                    = 3000
+  to_port                      = 3000
+  ip_protocol                  = "tcp"
 }
 
 resource "aws_vpc_security_group_ingress_rule" "nat_ingress_ecs" {
-  security_group_id = aws_security_group.nat.id
+  security_group_id            = aws_security_group.nat.id
   referenced_security_group_id = aws_security_group.ecs_service.id
-  from_port   = 3000
-  to_port     = 3000
-  ip_protocol = "tcp"
+  from_port                    = 3000
+  to_port                      = 3000
+  ip_protocol                  = "tcp"
 }
 
 # ECS
@@ -67,25 +67,44 @@ resource "aws_security_group" "ecs_service" {
   name   = "${local.prefix}-ecs"
   vpc_id = aws_vpc.main.id
   egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
     security_groups = [aws_security_group.nat.id]
   }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ecs_ingress_elb" {
-  security_group_id = aws_security_group.ecs_service.id
+  security_group_id            = aws_security_group.ecs_service.id
   referenced_security_group_id = aws_security_group.elb.id
-  from_port   = 3000
-  to_port     = 3000
-  ip_protocol = "tcp"
+  from_port                    = 3000
+  to_port                      = 3000
+  ip_protocol                  = "tcp"
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ecs_ingress_nat" {
-  security_group_id = aws_security_group.ecs_service.id
+  security_group_id            = aws_security_group.ecs_service.id
   referenced_security_group_id = aws_security_group.nat.id
-  from_port   = 3000
-  to_port     = 3000
-  ip_protocol = "tcp"
+  from_port                    = 3000
+  to_port                      = 3000
+  ip_protocol                  = "tcp"
+}
+
+# Lambda
+
+resource "aws_security_group" "lambda-post-user-signup" {
+  name   = "${local.prefix}-lambda-post-user-signup"
+  vpc_id = aws_vpc.main.id
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.nat.id]
+  }
+  egress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.nat.id]
+  }
 }
