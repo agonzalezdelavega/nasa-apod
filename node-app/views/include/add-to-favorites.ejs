@@ -2,28 +2,35 @@
     <% if (!isLoggedIn) { %>
         <span class="material-symbols-outlined star" title="Sign in to add images to your favorites!">star</span>
     <% } else { %>
-        <form action="/images?imageDate=<%= imageDate %>" method="post">
-            <input type="hidden" name="imageDate" value="<%= imageDate %>">
-            <input type="hidden" name="imageTitle" value="<%= imageTitle %>">
-            <input type="hidden" name="image" value="<%= image %>">
-            <input type="hidden" name="mediaType" value="<%= mediaType %>">
-            <button class="btn-favorites" type="submit">
-                <span class="material-symbols-outlined star" title="Add to favorites">star</span>
-                <script>
-                    var isFavorite = "<%= isFavorite %>";
-                    const star = document.querySelector(".star");
-                    if (isFavorite === "true") {
-                        star.classList.add("favorite")
-                    };
-
-                    function toggleFavorites(e) {
-                        isFavorite = !isFavorite;
-                        e.target.classList.toggle("favorite");
-                    };
-
-                    star.addEventListener("click", toggleFavorites);
-                </script>
+            <button class="btn-favorites" id="btn-favorites" type="submit">
+                <span class="material-symbols-outlined star" title="Add to favorites" id="star">star</span>
             </button>
-        </form>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> 
+            <script type="text/javascript">
+                var isFavorite = "<%= isFavorite %>";
+                if (isFavorite === 'true') {
+                    $('#star').addClass('favorite');
+                };
+                $('#btn-favorites').click(function() {
+                    isFavorite = !isFavorite;
+                    $('#star').toggleClass('favorite');
+                    $.ajax({
+                        url: '/images?imageDate=<%= imageDate %>',
+                        method: 'POST',
+                        data: {
+                            'imageDate':'<%= imageDate %>',
+                            'imageTitle':'<%= imageTitle %>',
+                            'image':'<%= image %>',
+                            'mediaType':'<%= mediaType %>'
+                        },
+                        error: function(jqXHR, textStatus, err) {
+                            console.error(textStatus);
+                            console.error(err);
+                            isFavorite = !isFavorite;
+                            $('#star').toggleClass('favorite');
+                        }
+                    });
+                });
+            </script>
     <% } %>
 <% } %>
